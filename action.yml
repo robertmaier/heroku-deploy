@@ -99,9 +99,10 @@ inputs:
     description: "Adds the App to a pipeline"
     required: false
     default: ""
-  pipeline_stage: "Sets the pipeline stage. Can be development, staging oder production"
+  pipeline_stage: 
+    description: "Sets the pipeline stage. Can be development, staging oder production"
     required: false
-    default: "development"  
+    default: "development"
 
 outputs:
   status:
