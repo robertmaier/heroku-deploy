@@ -35,7 +35,7 @@ const addRemote = ({ app_name, dontautocreate, buildpack, region, team, stack })
 };
 
 const addToPipeline = ({ pipeline_name, pipeline_stage, app_name }) => {
-  execSync(`heroku pipelines:add rbcom -a ${app_name} --stage=${pipeline_stage}`)
+  execSync(`heroku pipelines:add ${pipeline_name} -a ${app_name} --stage=${pipeline_stage}`)
 };
 
 const addConfig = ({ app_name, env_file, appdir }) => {
@@ -77,8 +77,8 @@ const deploy = ({
   appdir,
   no_verify,
   formation_name,
-  formation_quantity,
   formation_size,
+  pipeline_name
 }) => {
   const force = !dontuseforce ? "--force" : "";
   const noVerify = !!no_verify ? "--no-verify" : "";
@@ -237,7 +237,7 @@ if (heroku.dockerBuildArgs) {
     console.log("Successfully logged into heroku");
 
     addRemote(heroku);
-    if (pipeline_name) {
+    if (heroku.pipeline_name) {
       addToPipeline(heroku);
     }
     addConfig(heroku);
