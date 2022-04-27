@@ -95,6 +95,13 @@ inputs:
     description: "Set the formation size"
     required: false
     default: ""
+  pipeline_name:
+    description: "Adds the App to a pipeline"
+    required: false
+    default: ""
+  pipeline_stage: "Sets the pipeline stage. Can be development, staging oder production"
+    required: false
+    default: "development"  
 
 outputs:
   status:

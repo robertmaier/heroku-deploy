@@ -34,6 +34,10 @@ const addRemote = ({ app_name, dontautocreate, buildpack, region, team, stack })
   }
 };
 
+const addToPipeline = ({ pipeline_name, pipeline_stage, app_name }) => {
+  execSync(`heroku pipelines:add rbcom -a ${app_name} --stage=${pipeline_stage}`)
+};
+
 const addConfig = ({ app_name, env_file, appdir }) => {
   let configVars = [];
   for (let key in process.env) {
@@ -164,6 +168,8 @@ let heroku = {
   formation_name: core.getInput("formation_name"),
   formation_quantity: core.getInput("formation_quantity"),
   formation_size: core.getInput("formation_size"),
+  pipeline_name: core.getInput("pipeline"),
+  pipeline_stage: core.getInput("pipeline_stage")
 };
 
 // Formatting
@@ -231,6 +237,9 @@ if (heroku.dockerBuildArgs) {
     console.log("Successfully logged into heroku");
 
     addRemote(heroku);
+    if (pipeline_name) {
+      addToPipeline(heroku);
+    }
     addConfig(heroku);
 
     try {
