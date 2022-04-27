@@ -73,6 +73,7 @@ const deploy = ({
   appdir,
 }) => {
   const force = !dontuseforce ? "--force" : "";
+  const noVerify = "--no-verify";
   if (usedocker) {
     execSync(
       `heroku container:push ${dockerHerokuProcessType} --app ${app_name} ${dockerBuildArgs}`,
@@ -95,12 +96,12 @@ const deploy = ({
     }
 
     if (appdir === "") {
-      execSync(`git push heroku ${branch}:refs/heads/main ${force}`, {
+      execSync(`git push heroku ${branch}:refs/heads/main ${force} ${noVerify}`, {
         maxBuffer: 104857600,
       });
     } else {
       execSync(
-        `git push ${force} heroku \`git subtree split --prefix=${appdir} ${branch}\`:refs/heads/main`,
+        `git push ${force} ${noVerify} heroku \`git subtree split --prefix=${appdir} ${branch}\`:refs/heads/main`,
         { maxBuffer: 104857600 }
       );
     }
