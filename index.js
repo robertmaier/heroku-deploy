@@ -71,9 +71,13 @@ const deploy = ({
   dockerHerokuProcessType,
   dockerBuildArgs,
   appdir,
+  no_verify,
+  formation_name,
+  formation_quantity,
+  formation_size,
 }) => {
   const force = !dontuseforce ? "--force" : "";
-  const noVerify = "--no-verify";
+  const noVerify = !!no_verify ? "--no-verify" : "";
   if (usedocker) {
     execSync(
       `heroku container:push ${dockerHerokuProcessType} --app ${app_name} ${dockerBuildArgs}`,
@@ -105,6 +109,10 @@ const deploy = ({
         { maxBuffer: 104857600 }
       );
     }
+  }
+
+  if (formation_name && formation_size) {
+    execSync(`heroku ps:type ${formation_name}=${formation_size} --app ${app_name}`)
   }
 };
 
@@ -152,6 +160,10 @@ let heroku = {
   region: core.getInput("region"),
   stack: core.getInput("stack"),
   team: core.getInput("team"),
+  no_verify: core.getInput("git_no_verify"),
+  formation_name: core.getInput("formation_name"),
+  formation_quantity: core.getInput("formation_quantity"),
+  formation_size: core.getInput("formation_size"),
 };
 
 // Formatting

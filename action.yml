@@ -83,9 +83,22 @@ inputs:
     description: "If deploying to an organization, then specify the name of the team or organization here"
     required: false
     default: ""
+  git_no_verify:
+    description: "Sets the --no-verify flag fir git push commands"
+    required: false
+    default: "false"
+  formation_name:
+    description: "Set the formation name"
+    required: false
+    default: ""
+  formation_size:
+    description: "Set the formation size"
+    required: false
+    default: ""
+
 outputs:
   status:
     description: "The Success/Failure of the action"
 runs:
-  using: "node12"
+  using: "node16"
   main: "index.js"
